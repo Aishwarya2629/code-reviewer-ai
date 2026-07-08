@@ -14,7 +14,9 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B)](project/LICENSE)
 
-[**Demo**](AICodeReviewerDemo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
+![Demo](AICodeReviewerDemo.gif) 
+
+· [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
 
 </div>
 
