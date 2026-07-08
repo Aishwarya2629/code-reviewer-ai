@@ -1,0 +1,143 @@
+services:
+
+  # ── PostgreSQL + pgvector ─────────────────────────────────────────────────
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ai_reviewer_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     reviewer
+      POSTGRES_PASSWORD: reviewer
+      POSTGRES_DB:       code_reviewer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reviewer -d code_reviewer"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_net
+
+  # ── Redis (broker + rate limit + circuit breaker) ─────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: ai_reviewer_redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_net
+
+  # ── FastAPI Backend ───────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_reviewer_backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      HOST:                  "0.0.0.0"
+      PORT:                  "8000"
+      LOG_FORMAT:            "json"
+      REDIS_URL:             "redis://redis:6379/0"
+      CELERY_BROKER_URL:     "redis://redis:6379/1"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/2"
+      DATABASE_URL:          "postgresql://reviewer:reviewer@postgres:5432/code_reviewer"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 25s
+    networks:
+      - app_net
+
+  # ── Celery Worker ─────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_reviewer_worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      REDIS_URL:             "redis://redis:6379/0"
+      CELERY_BROKER_URL:     "redis://redis:6379/1"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/2"
+      DATABASE_URL:          "postgresql://reviewer:reviewer@postgres:5432/code_reviewer"
+    command: >
+      celery -A app.workers.celery_app worker
+      --loglevel=info
+      --queues=reviews,problems
+      --concurrency=2
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - app_net
+
+  # ── Celery Flower (task monitor) ──────────────────────────────────────────
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_reviewer_flower
+    restart: unless-stopped
+    command: >
+      celery -A app.workers.celery_app flower --port=5555
+    environment:
+      CELERY_BROKER_URL: "redis://redis:6379/1"
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - worker
+    networks:
+      - app_net
+
+  # ── Streamlit Frontend ────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai_reviewer_frontend
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: "http://backend:8000"
+    ports:
+      - "8501:8501"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - app_net
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  app_net:
+    driver: bridge

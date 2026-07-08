@@ -1,0 +1,26 @@
+# Root requirements.txt — used by Streamlit Cloud (standalone mode)
+# Includes all backend + frontend dependencies in one file
+
+# ── Streamlit UI ─────────────────────────────────────────────
+streamlit
+Pillow
+requests
+
+# ── LangChain + LangGraph ─────────────────────────────────────
+langchain
+langchain-core
+langgraph
+langchain-google-genai
+google-generativeai
+langchain-groq
+langchain-openai
+
+# ── OCR ───────────────────────────────────────────────────────
+pytesseract
+opencv-python-headless
+numpy
+
+# ── Config ────────────────────────────────────────────────────
+pydantic
+pydantic-settings
+python-dotenv

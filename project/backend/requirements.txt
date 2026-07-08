@@ -1,0 +1,44 @@
+# ── Web framework ─────────────────────────────────────────────
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+
+# ── Config & validation ───────────────────────────────────────
+pydantic==2.7.4
+pydantic-settings==2.3.4
+python-dotenv==1.0.1
+
+# ── LangChain + LangGraph ─────────────────────────────────────
+langchain==0.2.16
+langchain-core==0.2.38
+langgraph==0.2.14
+
+# ── LLM providers ─────────────────────────────────────────────
+langchain-google-genai==1.0.10
+google-generativeai==0.7.2
+langchain-groq==0.1.9
+langchain-openai==0.1.23
+
+# ── OCR & image processing ────────────────────────────────────
+pytesseract==0.3.10
+opencv-python-headless==4.10.0.84
+Pillow==10.4.0
+numpy==1.26.4
+
+# ── Queue (Celery + Redis) ────────────────────────────────────
+celery[redis]==5.4.0
+flower==2.0.1
+redis==5.0.8
+
+# ── Database (PostgreSQL + pgvector) ─────────────────────────
+psycopg2-binary==2.9.9
+
+# ── Observability (Prometheus) ────────────────────────────────
+prometheus-client==0.20.0
+
+# ── GitHub webhook ────────────────────────────────────────────
+httpx==0.27.2
+
+# ── Testing ───────────────────────────────────────────────────
+pytest==8.3.2
+pytest-asyncio==0.23.8
