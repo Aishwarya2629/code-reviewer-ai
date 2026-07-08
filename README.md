@@ -17,7 +17,7 @@
 <!-- Replace with your actual demo GIF after converting Demo.mp4 -->
 <!-- ffmpeg -i Demo.mp4 -vf "fps=10,scale=960:-1" -loop 0 docs/assets/demo.gif -->
 
-[**Demo**](demo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
+[**Demo**](demo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
 
 </div>
 
