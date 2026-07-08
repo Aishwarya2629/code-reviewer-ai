@@ -4,7 +4,7 @@
 
 **A distributed multi-agent AI system for code review, security scanning, complexity analysis, and DSA problem solving.**
 
-[![CI](https://github.com/aishwarya2629/ai-code-reviewer/actions/workflows/ci.yml/badge.svg)](https://github.com/aishwarya2629/ai-code-reviewer/actions)
+[![CI](https://github.com/Aishwarya2629/code-reviewer-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/aishwarya2629/code-reviewer-ai/actions)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.2-6B46C1)](https://langchain-ai.github.io/langgraph)
@@ -13,9 +13,6 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL+pgvector-16-336791?logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B)](LICENSE)
-
-<!-- Replace with your actual demo GIF after converting Demo.mp4 -->
-<!-- ffmpeg -i Demo.mp4 -vf "fps=10,scale=960:-1" -loop 0 docs/assets/demo.gif -->
 
 [**Demo**](demo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
 
