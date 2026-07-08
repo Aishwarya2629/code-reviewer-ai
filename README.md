@@ -12,9 +12,9 @@
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](https://redis.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL+pgvector-16-336791?logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose)
-[![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B)](project/LICENSE)
 
-[**Demo**](demo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
+[**Demo**](AICodeReviewerDemo.gif) · [**API Docs**](https://fastapi.tiangolo.com/) · [**Architecture**](project/docs/ARCHITECTURE.md) · [**Deployment Guide**](DEPLOYMENT.md)
 
 </div>
 
