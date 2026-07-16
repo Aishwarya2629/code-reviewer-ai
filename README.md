@@ -78,36 +78,36 @@ Most "AI code reviewers" are a single LLM prompt wrapped in a web form. This sys
 └──────┬────────┘                 │   result: Redis :6379 │
        │ miss                     └──────────┬───────────┘
        ▼                                     │
-┌──────────────────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────────────────┐
 │                  LangGraph Agent Pipeline                     │
-│                                                              │
-│  ┌────────────┐                                              │
-│  │ 1.Classify │ detect language · input type (code/problem) │
-│  └──────┬─────┘  invalid → end_invalid (saves 5 LLM calls) │
-│         │ valid                                              │
-│  ┌──────▼──────┐                                            │
-│  │ 2.Security  │ Layer 1: 10 regex rules @ ~5 ms, $0 cost  │
-│  │   Scanner   │ Layer 2: LLM contextual scan (subtle bugs) │
-│  └──────┬──────┘                                            │
-│         │                                                    │
-│  ┌──────▼──────┐                                            │
-│  │ 3.Complexity│ LLM analysis of original code              │
-│  │  Analyzer   │ Establishes BEFORE baseline for comparison │
-│  └──────┬──────┘                                            │
-│         │                                                    │
-│  ┌──────▼──────┐                                            │
-│  │ 4.Optimizer │ Full context: language + complexity +       │
-│  │             │ security findings → informed optimisation  │
-│  └──────┬──────┘                                            │
-│         │                    ┌────────────────────────┐     │
-│  ┌──────▼──────┐             │   If validation fails: │     │
-│  │ 5.Validator │─── fail ───▶│   rollback to original │     │
-│  └──────┬──────┘             │   code automatically   │     │
-│         │ pass               └────────────────────────┘     │
-│  ┌──────▼──────┐                                            │
-│  │ 6.Explainer │ after complexity · narrative · analysis    │
-│  └─────────────┘                                            │
-└──────────────────────────────────────────────────────────────┘
+│                                                               │
+│  ┌────────────┐                                               │
+│  │ 1.Classify │ detect language · input type (code/problem)   │
+│  └──────┬─────┘  invalid → end_invalid (saves 5 LLM calls)    │
+│         │ valid                                               │
+│  ┌──────▼──────┐                                              │
+│  │ 2.Security  │ Layer 1: 10 regex rules @ ~5 ms, $0 cost     │
+│  │   Scanner   │ Layer 2: LLM contextual scan (subtle bugs)   │
+│  └──────┬──────┘                                              │
+│         │                                                     │
+│  ┌──────▼──────┐                                              │
+│  │ 3.Complexity│ LLM analysis of original code                │
+│  │  Analyzer   │ Establishes BEFORE baseline for comparison   │
+│  └──────┬──────┘                                              │ 
+│         │                                                     │
+│  ┌──────▼──────┐                                              │
+│  │ 4.Optimizer │ Full context: language + complexity +        │
+│  │             │ security findings → informed optimisation    │
+│  └──────┬──────┘                                              │
+│         │                     ┌────────────────────────┐      │
+│  ┌──────▼──────┐              │   If validation fails: │      │
+│  │ 5.Validator │─── fail ───▶│  rollback to original  │      │
+│  └──────┬──────┘              │   code automatically   │      │
+│         │ pass                └────────────────────────┘      │
+│  ┌──────▼──────┐                                              │
+│  │ 6.Explainer │ after complexity · narrative · analysis      │
+│  └─────────────┘                                              │
+└───────────────────────────────────────────────────────────────┘
                         │
         ┌───────────────┼────────────────────────┐
         ▼               ▼                        ▼
@@ -118,13 +118,13 @@ Most "AI code reviewers" are a single LLM prompt wrapped in a web form. This sys
 │              │ │              │      │  Tables:          │
 │ Gemini Pro   │ │ Tier 1:      │      │  tenants          │
 │ Gemini Flash │ │ SHA-256 hash │      │  review_cache     │
-│ Groq LLaMA3  │ │ (< 1 ms)    │      │  request_metrics  │
+│ Groq LLaMA3  │ │ (< 1 ms)     │      │  request_metrics  │
 │ OpenRouter   │ │              │      │                   │
 │ DeepSeek     │ │ Tier 2:      │      │  Indexes:         │
 │ Mistral      │ │ cosine sim   │      │  hash_idx         │
 │              │ │ ≥ 0.93       │      │  ivfflat on       │
 │ Circuit      │ │ (~5–20 ms)   │      │  embedding col    │
-│ breaker per  │ └──────────────┘      └──────────────────┘
+│ breaker per  │ └──────────────┘      └───────────────────┘
 │ provider     │
 │ (Redis)      │
 └──────────────┘
